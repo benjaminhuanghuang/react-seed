@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+
+import Clock from './clock';
 import './app.css'
 
 class App extends Component{
@@ -7,24 +9,19 @@ class App extends Component{
         super(props);
         this.state = {
             deadline: 'December 25, 2017',
-            counter: 0
+            newDeadline: ''
         };
     }
 
     changeDeadline(){
-        this.setState({deadline: "November 25, 2017"});
+        this.setState({deadline: this.state.newDeadline});
     }
     render(){
         return (<div className="app">  
                     <div className="app-title"> Countdown to {this.state.deadline}</div>
-                    <div> 
-                        <div className="time"> Days </div>
-                        <div className="time"> Hours </div>
-                        <div className="time"> minutes</div>    
-                        <div className="time"> seconds</div>    
-                    </div>
+                    <Clock/>
                     <div>
-                        <input type="text" placeholder='new date'/>
+                        <input type="text" placeholder='new date' onChange={event=>this.setState({newDeadline:event.target.val})}/>
                         <button onClick={()=>this.changeDeadline()}>Submit</button>
                     </div>
                 </div>) 
