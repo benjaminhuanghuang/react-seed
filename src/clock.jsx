@@ -27,12 +27,15 @@ class Clock extends Component {
     {
         setInterval(()=>this.getTimeUntil(this.props.deadline), 1000);
     }
+    leading0(num){
+        return (num<10)? '0'+ num : num;
+    }
     render() {
         return (<div>
-                    <div className="time"> {this.state.days} Days</div>
-                    <div className="time"> {this.state.hours} Hours</div>
-                    <div className="time"> {this.state.minutes} Minutes</div>
-                    <div className="time"> {this.state.seconds} Seconds</div>
+                    <div className="time"> {this.leading0(this.state.days)} Days</div>
+                    <div className="time"> {this.leading0(this.state.hours)} Hours</div>
+                    <div className="time"> {this.leading0(this.state.minutes)} Minutes</div>
+                    <div className="time"> {this.leading0(this.state.seconds)} Seconds</div>
                 </div>);
     }
 }
