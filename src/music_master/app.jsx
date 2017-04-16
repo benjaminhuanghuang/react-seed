@@ -10,8 +10,8 @@ class App extends Component {
         super(props);
         this.state = {
             query: '',
-            artist:null,
-            tracks:[]
+            artist: null,
+            tracks: []
         };
     }
 
@@ -20,21 +20,22 @@ class App extends Component {
         //const FETCH_URL = BASE_URL + "q=" + this.state.query + "&type=artist&limit=1"
         let FETCH_URL = `${BASE_URL}q=${this.state.query}&type=artist&limit=1`
         const ALBUM_URL = 'https://api.spotify.com/v1/artist/';
-        
+
         fetch(FETCH_URL, {
-            method:"GET"
+            method: "GET"
         })
-        .then(response=>response.json())
-        .then(json=>{
-            const artist = json.artist.items[0];
-            this.setState({artist});
+        .then(response => response.json())
+        .then(json => {
+            console.log("json", json);
+            const artist = json.artists.items[0];
+            this.setState({ artist });
             FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=US&`
-            fetch(FETCH_URL, {method:"GET"})
-            .then(response=>response.json())
-            .then(json=>{
-                const tracks = json.tracks;
-                this.setState({tracks});
-            });
+            fetch(FETCH_URL, { method: "GET" })
+                .then(response => response.json())
+                .then(json => {
+                    const tracks = json.tracks;
+                    this.setState({ tracks });
+                });
         })
     }
     render() {
@@ -42,12 +43,11 @@ class App extends Component {
                     <div className="app-title">Music Master</div>
                     <FormGroup>
                         <InputGroup>
-                            <FormControl type="text" placeholder="search an artist..."
+                            <FormControl type="text" placeholder="Search for an artist..."
                                 value={this.state.query}
-                                onChange={event=>{ this.setState({ query: event.target.value }) }}
-                                onKeyPress={event=>{
-                                    if(event.key === "Enter")
-                                    {
+                                onChange={event => { this.setState({ query: event.target.value })}}
+                                onKeyPress={event => {
+                                    if (event.key === "Enter") {
                                         this.search();
                                     }
                                 }}
@@ -58,14 +58,13 @@ class App extends Component {
                         </InputGroup>
                     </FormGroup>
                     {
-                        this.state.artist !== null 
-                        ?<div>
-                            <Profile artist={this.state.artist}></Profile>
-                            <Gallery tracks={this.state.tracks} className="gallerry"/>
-                         </div>
-                        :<div></div>
+                        this.state.artist !== null
+                            ? <div>
+                                <Profile artist={this.state.artist}></Profile>
+                                <Gallery tracks={this.state.tracks} className="gallerry" />
+                            </div>
+                            : <div></div>
                     }
-                    
             </div>)
     }
 }
