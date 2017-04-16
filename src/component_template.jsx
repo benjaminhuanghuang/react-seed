@@ -12,4 +12,4 @@ class MyComponent extends Component {
         return (<div> {this.state.name} </div>);
     }
 }
-export default Clock;
+export default MyComponent;
